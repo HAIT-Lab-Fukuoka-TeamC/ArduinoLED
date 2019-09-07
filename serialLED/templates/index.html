@@ -1,0 +1,6 @@
+<form action="{% url 'index' %}" method="post">
+    <button type="submit" name="LED" class="btn btn-primary btn-block btn-lg">
+        LEDボタン
+   </button>
+   {% csrf_token %}
+</form>
