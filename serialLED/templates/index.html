@@ -1,6 +1,33 @@
-<form action="{% url 'index' %}" method="post">
-    <button type="submit" name="LED" class="btn btn-primary btn-block btn-lg">
-        LEDボタン
+<!--
+<form action="{% url 'index_1' %}" method="post">
+      <button type="submit" name="LED" class="btn btn-primary btn-block btn-lg">
+		<button type="submit" name="LED_OFF" >
+        LED_OFF
    </button>
    {% csrf_token %}
-</form>
+</form> -->
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>テストWebアプリ</title>
+  </head>
+  <body>
+		<form action="{% url 'index_1' %}" method="post">
+		      <button type="submit" name="LED" class="btn btn-primary btn-block btn-lg">
+				<button type="submit" name="LED_OFF" >
+		        LED_OFF
+		   </button>
+		   {% csrf_token %}
+		</form>
+
+
+	  <h1>my_temp</h1>
+    {{ temperature}}
+    <h1>my_humit</h1>
+    {{ humit}}
+    <h1>my_DI</h1>
+    {{ DI }}
+
+  </body>
+</html>
