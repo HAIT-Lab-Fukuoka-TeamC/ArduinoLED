@@ -1,17 +1,58 @@
-const int led_pin =  9;
-int led_state = 0;
+#include <DHT.h>
 
-int button_state = 0;
+ float temperature;
+ float humit;
+ float DI;//不快値
+
+
+const int PIN_DHT = 8;
+DHT dht(PIN_DHT,DHT11);
 
 void setup() {
-  pinMode(led_pin, OUTPUT);
   Serial.begin(9600);
-
+  //Serial1.begin(9600);
+  Serial.println("DHT11");
+  dht.begin();
 }
 
 void loop() {
-  if (Serial.read() != 1) {
-    led_state = ~led_state;
-    digitalWrite(led_pin, led_state);
-  }
+
+
+
+humit= dht.readHumidity();
+temperature = dht.readTemperature();
+//DI=不快指数 DI　（Tは乾球気温℃、Hは湿度％）
+DI=0.81*temperature+0.01*humit*(0.99*temperature-14.3)+46.3;
+
+ Serial.write(round(temperature));
+ //Serial.write(100);
+ //if(Serial.read()!=round(data.temperature)){
+
+ //Serial.write(10);
+ Serial.write(round(humit));//}
+ //if(Serial.read()!=round(data.humit)){
+
+ //Serial.write(80);
+Serial.write(round(DI));//}
+
+//Serial1.write(round(data.humit));
+//int humidity_1 ;humidity_1= dht.readHumidity()*100;
+  //int temperature_1 ; temperature_1=dht.readTemperature()*100;
+
+//Serial.write(111);
+//Serial.write();
+
+  //Serial.write(temperature_1);
+
+ Serial.print("Humidity:  ");
+  Serial.print(humit);
+  Serial.println("%\t");
+ Serial.print("Temperature:  ");
+Serial.print(temperature);
+  Serial.println(" *C");
+  Serial.print("DI: ");
+  Serial.print(DI);
+  Serial.println("%");
+
+  delay(500);
 }
