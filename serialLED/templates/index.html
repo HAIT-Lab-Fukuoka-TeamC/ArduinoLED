@@ -1,33 +1,214 @@
-<!--
-<form action="{% url 'index_1' %}" method="post">
-      <button type="submit" name="LED" class="btn btn-primary btn-block btn-lg">
-		<button type="submit" name="LED_OFF" >
-        LED_OFF
-   </button>
-   {% csrf_token %}
-</form> -->
-<!doctype html>
-<html lang="ja">
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>テストWebアプリ</title>
+    <title>熱中症危険度予測くん</title>
   </head>
   <body>
-		<form action="{% url 'index_1' %}" method="post">
-		      <button type="submit" name="LED" class="btn btn-primary btn-block btn-lg">
-				<button type="submit" name="LED_OFF" >
-		        LED_OFF
-		   </button>
-		   {% csrf_token %}
-		</form>
+    <h1><p align="center">
+			<font size="7">
+			気温・湿度・不快指数
+      {{time}}
+		</font>
+		</p>
+	</h1>
+  <style type="text/css">
+  h1{
+    color: blue;
+    border-bottom: double 6px #87CEFA;
+  }
+  </style>
+    <form action="{% url 'index_1' %}" method="post">
+      <p align="center">
+          <!-- <button type="submit" name="LED" class="btn btn-primary btn-block btn-lg"> -->
+        <button type="submit" name="LED_OFF"style="width:100px;height:70px" >
+            <font size ="6">受信</font>
+       </button>
+       {% csrf_token %}
+       </p>
+    </form>
+    <table border="1"align="right" width="400" cellspacing="0" cellpadding="5" bordercolor="#333333">
+    	<p align="center">
+    	<!-- <caption><font size="6">気温・湿度・不快指数</font></caption> -->
+    	<tr>
+    		<td bgcolor="#99CC00" align="center" nowrap>
+    		<font size="6">気温</font><br>
+    		</td>
+    		<td bgcolor="#FFFFFF" valign="center" width="150">
+        {{ temperature}}℃
+    	</td>
+    	</tr>
+    	<tr>
+    		<td bgcolor="#99CC00" align="center" nowrap>
+    		<font size="6">湿度</font><br>
+    		</td>
+    		<td bgcolor="#FFFFFF" valign="middle" width="150">
+        {{ humit}}％
+    	</td>
+    </tr>
+    <tr>
+    	<td bgcolor="#99CC00" align="center" nowrap>
+        <font size="6">不快指数</font><br>
+    	</td>
+    	<td bgcolor="#FFFFFF" valign="middle" width="150">
+        {{ DI }}
+    	</td>
+    </tr>
+    </p>
+    </table>
+    <br><center><font size=6><font color=black>
+    熱中症危険度は</font></center>
+            <center>
+              <!-- <script type='text/javascript'>
+     d={{ DI }} ;
+   </script>
+              <script src='javascript.js'>
+            </center> -->
+
+            <!-- <form action="{% url 'index_1' %}" method="post">
+              <p align="center">
+                  <button type="submit" name="LED" class="btn btn-primary btn-block btn-lg">
+                <button type="submit" name="LED_OFF"style="width:100px;height:70px" >
+                    <font size ="6">受信</font>
+               </button>
+               {% csrf_token %}
+               </p>
+            </form>  -->
+
+            {%load static %}
+            <script type="text/javascript">
+            var d={{DI}};
+            var p = String(d);
 
 
-	  <h1>my_temp</h1>
-    {{ temperature}}
-    <h1>my_humit</h1>
-    {{ humit}}
-    <h1>my_DI</h1>
-    {{ DI }}
+            if (d <70) {
+              document.write(p.big().fontcolor('blue'))
+              document.write("<br>")
+              document.write('<img src="{%static "kids_run.png"%}" alt="1" width="400" height="350">')
+            }else if (70<=d&&d<=74) {
+              document.write(p.big().fontcolor('limegreen'))
+              document.write("<br>")
+              document.write('<img src="{%static "suzushii.png"%}" alt="2" width="400" height="350">')
+            }else if (75<=d&&d<=79) {
+              document.write(p.big().fontcolor('green'))
+              document.write("<br>")
+              document.write('<img src="{%static "ase.png"%}" alt="3" width="400" height="350">')
+            }else if (80<=d&&d<=84) {
+              document.write(p.big().fontcolor('darkorange'))
+              document.write("<br>")
+              document.write('<img src="{%static "熱中症イラスト.png"%}" alt="4" width="400" height="350">')
+            }else if (d>=85) {
+              document.write(p.big().fontcolor('red'))
+              document.write("<br>")
+              document.write('<img src="{%static "yabai.png"%}" alt="5" width="400" height="350">')
+            }
+            </script>
 
+
+    <!-- <br><br><font size=5>
+    ↓熱中症危険度の目安<br></font>
+    <font size=4>0-30 大丈夫、外で運動しよう。<br>
+    30-70 あついね、汗が出るね。<br>
+    70-100 要注意！こまめに水分補給<br>
+    100- やばい！アレクサ、冷房入れて！<br>
+  </font><br> -->
+    <font size=5><table rules='all' id='table_id'>
+      <tr>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td> </td>
+        <td align='center'> 0%</td>
+        <td>20%</td>
+        <td>40%</td>
+        <td>60%</td>
+        <td>80%</td>
+        <td>100%</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>15℃</td>
+        <td align='center'>0</td>
+        <td align='center'>0</td>
+        <td align='center'>0</td>
+        <td align='center'>0</td>
+        <td align='center'>0</td>
+        <td align='center'>0</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td align='center'>20℃</td>
+        <td align='center'>10</td>
+        <td align='center'>14</td>
+        <td align='center'>19</td>
+        <td align='center'>23</td>
+        <td align='center'>28</td>
+        <td align='center'>32</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td align='center'>25℃</td>
+        <td align='center'>26</td>
+        <td align='center'>35</td>
+        <td align='center'>43</td>
+        <td align='center'>51</td>
+        <td align='center'>60</td>
+        <td align='center'>68</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td align='center'>30℃</td>
+        <td align='center'>42</td>
+        <td align='center'>55</td>
+        <td align='center'>67</td>
+        <td align='center'>79</td>
+        <td align='center'>92</td>
+        <td align='center'>104</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td align='center'>35℃</td>
+        <td align='center'>59</td>
+        <td align='center'>75</td>
+        <td align='center'>91</td>
+        <td align='center'>107</td>
+        <td align='center'>124</td>
+        <td align='center'>140</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td align='center'>40℃</td>
+        <td align='center'>75</td>
+        <td align='center'>95</td>
+        <td align='center'>115</td>
+        <td align='center'>136</td>
+        <td align='center'>156</td>
+        <td align='center'>176</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td align='center'>45℃</td>
+        <td align='center'>91</td>
+        <td align='center'>115</td>
+        <td align='center'>139</td>
+        <td align='center'>164</td>
+        <td align='center'>188</td>
+        <td align='center'>212</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td align='center'>50℃</td>
+        <td align='center'>107</td>
+        <td align='center'>135</td>
+        <td align='center'>164</td>
+        <td align='center'>192</td>
+        <td align='center'>220</td>
+        <td align='center'>248</td>
+        <td align='center'></td>
+      </tr>
+      <tr>
+      </tr>
+    </font>
   </body>
 </html>

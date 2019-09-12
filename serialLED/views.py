@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.http import HttpResponse
 import serial
+import datetime,time
 # Create your views here.
 class IndexTemplateView_1(TemplateView):
     template_name = "index.html"
@@ -28,10 +29,13 @@ class IndexTemplateView_1(TemplateView):
                 val_2=int.from_bytes(DI_pre,"big")
                 #val_2=50
                 #temperature=temperature_100/100;
+                today=datetime.datetime.fromtimestamp(time.time())
+                now_time=today.strftime("%H:%M")
                 my_distance={
                 'temperature':val,
                 "humit":val_1,
                 "DI":val_2,
+                "time":now_time,
                 }
                 ser.close()
         return render(request, self.template_name,my_distance)
